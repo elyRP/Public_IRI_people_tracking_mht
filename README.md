@@ -46,3 +46,5 @@ cargo handling in ports. Sensors, 19(1), 107.
 [11] Repiso Polo, E. (2015). Robust multi-hypothesis tracker fusing diverse sensor
 information (Master's thesis, Universitat Politècnica de Catalunya).
 [https://upcommons.upc.edu/handle/2117/84172]
+
+TODO: include the part of readme that it is not here. Check if there is something more missed.
