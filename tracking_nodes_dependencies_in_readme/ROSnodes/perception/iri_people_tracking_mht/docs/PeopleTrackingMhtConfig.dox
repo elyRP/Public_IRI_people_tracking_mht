@@ -1,0 +1,25 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~frame_id" : \b [str] frame to transform poses to min: , default: /map, max: 
+- \b "~association_threshold" : \b [double] distance association threshold min: 0.0, default: 2.0, max: 5.0
+- \b "~confirmation_threshold" : \b [double] confirmation threshold min: 0.0, default: 0.9, max: 1.0
+- \b "~deletion_threshold" : \b [double] deletion threshold min: 0.0, default: 0.5, max: 1.0
+- \b "~laser_probability" : \b [double] laser detection probability min: 0.0, default: 0.9, max: 1.0
+- \b "~laser_false_alarm" : \b [double] laser false alarm probability min: 0.0, default: 0.1, max: 1.0
+- \b "~laser_new_track" : \b [double] laser new track probability min: 0.0, default: 0.11, max: 1.0
+- \b "~laser_no_detection" : \b [double] laser no detection probability min: 0.0, default: 0.95, max: 1.0
+- \b "~laser_no_confirmed" : \b [double] laser no confirmed probability min: 0.0, default: 0.02, max: 1.0
+- \b "~laser_no_confirmed_iteration" : \b [double] laser no confirmed iteration probability min: 0.0, default: 0.003, max: 1.0
+- \b "~augment_covariance_track" : \b [double] augment covariance track when not have detection asociated min: 0.0, default: 0.1, max: 5.0
+- \b "~id_markers" : \b [bool] enable id markers output min: False, default: True, max: True
+- \b "~cov_markers" : \b [bool] enable covariance markers output min: False, default: True, max: True
+- \b "~cov_markers_head" : \b [bool] enable covariance markers (head) output min: False, default: True, max: True
+- \b "~cov_markers_arm1" : \b [bool] enable covariance markers (arm1) output min: False, default: False, max: True
+- \b "~cov_markers_arm2" : \b [bool] enable covariance markers (arm2) output min: False, default: False, max: True
+- \b "~vel_markers" : \b [bool] enable velocity markers output min: False, default: True, max: True
+- \b "~covdet_markers" : \b [bool] enable covariance of detections markers output min: False, default: False, max: True
+- \b "~covpred_markers" : \b [bool] enable covariance of predictions markers output min: False, default: False, max: True
+- \b "~clust_markers" : \b [bool] enable cluster markers output min: False, default: False, max: True
+

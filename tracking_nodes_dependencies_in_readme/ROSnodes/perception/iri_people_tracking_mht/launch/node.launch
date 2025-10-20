@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!-- -->
+<launch>
+
+  <arg name="ns"            default="robot" />
+  <arg name="node_name"     default="mht" />
+  <arg name="config_file"   default="$(find iri_people_tracking_mht)/config/params.yaml" />
+  <arg name="respawn"       default="true" />
+  <arg name="output"        default="screen" />
+  <arg name="launch_prefix" default="" />
+  
+  <arg name="people_topic"             default="/$(arg ns)/lpmf/people_filtered"/>
+  <arg name="people_out_topic"         default="/$(arg ns)/$(arg node_name)/tracks"/>
+  <arg name="markers_topic"            default="/$(arg ns)/$(arg node_name)/markers"/>
+  <arg name="odom_topic"               default="/$(arg ns)/odom"/>
+  <arg name="odom_med_velocity_topic"  default="/$(arg ns)/odom"/>
+
+  <group ns="$(arg ns)">
+
+    <node pkg ="iri_people_tracking_mht"
+          type="iri_people_tracking_mht"
+          name="$(arg node_name)"
+          respawn="$(arg respawn)"
+          output="$(arg output)"
+          launch-prefix="$(arg launch_prefix)">
+      <rosparam file="$(arg config_file)" command="load" />
+      <remap from="~detections"        to="$(arg people_topic)" />
+      <remap from="~tracks"    to="$(arg people_out_topic)" />
+      <remap from="~tracksMarkers" to="$(arg markers_topic)" />
+      <remap from="~odom" to="$(arg odom_topic)" />
+      <remap from="~odom_for_medium_velocity" to="$(arg odom_med_velocity_topic)" />
+    </node>
+
+  </group>
+
+</launch>

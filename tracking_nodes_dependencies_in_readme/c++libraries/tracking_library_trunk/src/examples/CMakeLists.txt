@@ -1,0 +1,17 @@
+# create an example application
+ADD_EXECUTABLE(people_tracking_mht_test people_tracking_mht_test.cpp)
+# link necessary libraries
+TARGET_LINK_LIBRARIES(people_tracking_mht_test people_tracking_mht)
+
+# create an example application
+#ADD_EXECUTABLE(fallos_tracker_en_predictions_test fallos_tracker_en_predictions_test.cpp)
+# link necessary libraries
+#TARGET_LINK_LIBRARIES(fallos_tracker_en_predictions_test people_tracking_mht) 
+#TARGET_LINK_LIBRARIES(fallos_tracker_en_predictions_test people_prediction)
+
+# create an example application
+#ADD_EXECUTABLE(Clusters_people_tracking_mht_test Clusters_people_tracking_mht_test.cpp)
+# link necessary libraries
+#TARGET_LINK_LIBRARIES(Clusters_people_tracking_mht_test people_tracking_mht) 
+#TARGET_LINK_LIBRARIES(Clusters_people_tracking_mht_test people_prediction)
+

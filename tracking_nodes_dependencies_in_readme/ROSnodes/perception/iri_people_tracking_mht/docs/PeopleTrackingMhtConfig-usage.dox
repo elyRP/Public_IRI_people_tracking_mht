@@ -1,0 +1,26 @@
+\subsubsection usage Usage
+\verbatim
+<node name="PeopleTrackingMhtAlgorithm" pkg="iri_people_tracking_mht" type="PeopleTrackingMhtAlgorithm">
+  <param name="frame_id" type="str" value="/map" />
+  <param name="association_threshold" type="double" value="2.0" />
+  <param name="confirmation_threshold" type="double" value="0.9" />
+  <param name="deletion_threshold" type="double" value="0.5" />
+  <param name="laser_probability" type="double" value="0.9" />
+  <param name="laser_false_alarm" type="double" value="0.1" />
+  <param name="laser_new_track" type="double" value="0.11" />
+  <param name="laser_no_detection" type="double" value="0.95" />
+  <param name="laser_no_confirmed" type="double" value="0.02" />
+  <param name="laser_no_confirmed_iteration" type="double" value="0.003" />
+  <param name="augment_covariance_track" type="double" value="0.1" />
+  <param name="id_markers" type="bool" value="True" />
+  <param name="cov_markers" type="bool" value="True" />
+  <param name="cov_markers_head" type="bool" value="True" />
+  <param name="cov_markers_arm1" type="bool" value="False" />
+  <param name="cov_markers_arm2" type="bool" value="False" />
+  <param name="vel_markers" type="bool" value="True" />
+  <param name="covdet_markers" type="bool" value="False" />
+  <param name="covpred_markers" type="bool" value="False" />
+  <param name="clust_markers" type="bool" value="False" />
+</node>
+\endverbatim
+
