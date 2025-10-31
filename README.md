@@ -46,3 +46,9 @@ cargo handling in ports. Sensors, 19(1), 107.
 [11] Repiso Polo, E. (2015). Robust multi-hypothesis tracker fusing diverse sensor
 information (Master's thesis, Universitat Politècnica de Catalunya).
 [https://upcommons.upc.edu/handle/2117/84172]
+
+# Installation
+
+Please, notice that this tracker is always used with the people laser leg detection of this repository. Then, you should install both to be able to use the test launch included. If the laser people leg detection is not in the github elyRP, contact ely.repiso@upc.edu to check if there is another option to be able to use the laser leg detector.
+
+TODO: include the part of readme that it is not here. Check if there is something more missed.
