@@ -5,9 +5,10 @@
  *      Author: gferrer
  *      Author: Ely Repiso (Modifications for people tracking mht)
  *
- *      license (for other authors that will not be the original ones): CC BY-NC-ND 4.0 
+ *      License (for other authors that will not be the original ones): CC BY-NC-ND 4.0 
  *              (Attribution-NonCommercial-NoDerivatives 4.0 International)
  *              https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en
+ *
  *      This license does not allow other authors to modify or to take profit from these works. 
  *      Then, for modifications or derivative works, please contact ely.repiso@upc.edu to try to agree on 
  *   collaborations (for journals with other researchers, formal collaborations between UPC and companies, and so on).
