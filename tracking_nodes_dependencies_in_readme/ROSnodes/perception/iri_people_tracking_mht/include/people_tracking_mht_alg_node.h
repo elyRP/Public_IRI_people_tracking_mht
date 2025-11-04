@@ -1,15 +1,22 @@
+/*
+ * people_tracking_mht_alg_node.h
+ *
+ *  Created aprox on: 07/07/2013 (aprox)
+ *      Author: Ely Repiso
+ */
 // Copyright (C) from 2013-until now Institut de Robotica i Informatica Industrial, CSIC-UPC.
-// Author 
+// Author Ely Repiso
 // All rights reserved.
 /*
-* people_tracking_mht_alg_node.h
 *
 *      Created on: 2013 by Ely Repiso and published first as her TFC on 13/12/2013. Last Modified by Ely Repiso on 2025 (migration to ros-Noetic and in the middle of ros2- humble migration) 
 *      Author: Ely Repiso (from 2013 and currently).
 *      Furthermore, this code is a modification and extension extracted from the theory of the open source papers of Donald Reid IEEE Transaction on Automatic Control 1979 and Kai Oliver Arras ICRA2008. We never had their code, therefore, we implemented this code from scratch, only taking inspiration from their articles.
+*     
 *      License (for other authors that will not be the original one): CC BY-NC-ND 4.0 
 *      (Attribution-NonCommercial-#NoDerivatives 4.0 International)
 *       https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en
+*
 *      This license does not allow other authors to modify or to take profit from these works. 
 *      Then, for #modifications or derivative works, please contact ely.repiso@upc.edu to try to agree on 
 *  collaborations (for #journals with other researchers, formal collaborations between UPC and companies, and so on).
@@ -45,58 +52,104 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 ***********************************************************
 */
+
 #ifndef _people_tracking_mht_alg_node_h_
 #define _people_tracking_mht_alg_node_h_
 
-#include <iri_base_algorithm/iri_base_algorithm.h>
 #include "people_tracking_mht_alg.h"
 
-#include <tf/transform_listener.h>
+#include <iri_base_algorithm/iri_base_algorithm.h>
+#include <iostream>
+#include <string>
+
+
+// new libs ini:
+#include <pluginlib/class_list_macros.hpp> //Importante para librerias con .so
+#include <rclcpp/rclcpp.hpp>
+#include <chrono>
+#include <functional>
+#include "rcl_interfaces/msg/set_parameters_result.hpp" 
+#include "mutex.h"
+#include "eventserver.h"
+using namespace std::chrono_literals;  // Para usar 100ms
+// new libs fin
+
+//#include <tf2_ros/buffer.h>
+//#include <tf2_ros/transform_listener.h>
+//#include <tf2/LinearMath/Quaternion.h>
+//#include <tf2_geometry_msgs/tf2_geometry_msgs.h>  // Required for tf2::toMsg()
+//#include <tf2/impl/utils.h>
+
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_listener.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/utils.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 
 // [publisher subscriber headers]
-#include <nav_msgs/Odometry.h>
-#include <visualization_msgs/MarkerArray.h>
-#include <iri_perception_msgs/detectionArray.h>
+#include <nav_msgs/msg/odometry.hpp>
+#include <visualization_msgs/msg/marker_array.hpp>
+#include <iri_perception_msgs/msg/detection_array.hpp>
+#include <geometry_msgs/msg/pose_stamped.hpp>
 
+#include <iri_base_algorithm/iri_base_algorithm.h>
 // [service client headers]
+#include <queue>
+
+
 
 // [action server client headers]
 
 /**
  * \brief IRI ROS Specific Algorithm Class
  *
- */
-class PeopleTrackingMhtAlgNode : public algorithm_base::IriBaseAlgorithm<PeopleTrackingMhtAlgorithm>
+ */ //, public std::enable_shared_from_this<PeopleTrackingMhtAlgNode> //public algorithm_base::IriBaseAlgorithm<PeopleTrackingMhtAlgorithm>
+class PeopleTrackingMhtAlgNode : public rclcpp::Node 
 {
   private:
+    // new variables ros2:
+    rclcpp::TimerBase::SharedPtr timer_;
+     // [class atributes]
+    CEventServer * event_server_;
+    std::string new_map_event_id_;
+    //new variables ros2 fin
+  
     // [publisher attributes]
-    ros::Publisher tracksMarkers_publisher_;
-    visualization_msgs::MarkerArray MarkerArray_msg_;
-    visualization_msgs::Marker id_track_marker_;
-    visualization_msgs::Marker id_cluster_marker_;
-    visualization_msgs::Marker cov_track_marker_;
-    visualization_msgs::Marker cov_track_marker_head_;
-    visualization_msgs::Marker cov_track_marker_arm1_;
-    visualization_msgs::Marker cov_track_marker_arm2_;
-    visualization_msgs::Marker velocity_track_marker_;
-    visualization_msgs::Marker cov_detection_marker_;
-    visualization_msgs::Marker cov_prediction_marker_;
-    visualization_msgs::Marker cluster_marker_;
-    visualization_msgs::Marker group_marker_;
+    //ros::Publisher tracksMarkers_publisher_;
+    rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr tracksMarkers_publisher_;
+    visualization_msgs::msg::MarkerArray MarkerArray_msg_;
+    visualization_msgs::msg::Marker id_track_marker_;
+    visualization_msgs::msg::Marker id_cluster_marker_;
+    visualization_msgs::msg::Marker cov_track_marker_;
+    visualization_msgs::msg::Marker cov_track_marker_head_;
+    visualization_msgs::msg::Marker cov_track_marker_arm1_;
+    visualization_msgs::msg::Marker cov_track_marker_arm2_;
+    visualization_msgs::msg::Marker velocity_track_marker_;
+    visualization_msgs::msg::Marker cov_detection_marker_;
+    visualization_msgs::msg::Marker cov_prediction_marker_;
+    visualization_msgs::msg::Marker cluster_marker_;
+    visualization_msgs::msg::Marker group_marker_;
 
     
-    ros::Publisher tracks_publisher_;
-    iri_perception_msgs::detectionArray trackingArray_msg_;
+    //ros::Publisher tracks_publisher_;
+    rclcpp::Publisher<iri_perception_msgs::msg::DetectionArray>::SharedPtr tracks_publisher_;
+    iri_perception_msgs::msg::DetectionArray trackingArray_msg_;
 
     // [subscriber attributes]
-    ros::Subscriber odom_for_medium_velocity_subscriber_;
-    void odom_for_medium_velocity_callback(const nav_msgs::Odometry::ConstPtr& msg);
+    //ros::Subscriber odom_for_medium_velocity_subscriber_;
+    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_for_medium_velocity_subscriber_;
+
+    void odom_for_medium_velocity_callback(const nav_msgs::msg::Odometry::ConstPtr& msg);
     CMutex odom_for_medium_velocity_mutex_;
-    ros::Subscriber odom_subscriber_;
-    void odom_callback(const nav_msgs::Odometry::ConstPtr& msg);
+    //ros::Subscriber odom_subscriber_;
+    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_subscriber_;
+
+    void odom_callback(const nav_msgs::msg::Odometry::ConstPtr& msg);
     CMutex odom_mutex_;
-    ros::Subscriber detections_subscriber_;
-    void detections_callback(const iri_perception_msgs::detectionArray::ConstPtr& msg);
+    //ros::Subscriber detections_subscriber_;
+    rclcpp::Subscription<iri_perception_msgs::msg::DetectionArray>::SharedPtr detections_subscriber_;
+
+    void detections_callback(const iri_perception_msgs::msg::DetectionArray::ConstPtr& msg);
     CMutex detections_mutex_;
 
     // [service attributes]
@@ -107,7 +160,13 @@ class PeopleTrackingMhtAlgNode : public algorithm_base::IriBaseAlgorithm<PeopleT
 
     // [action client attributes]
     std::string fixed_frame;
-	tf::TransformListener tf_;
+    rclcpp::Node::SharedPtr node_;
+	  //tf::TransformListener tf_;
+    //tf2_ros::Buffer::SharedPtr tf_buffer_;
+    //tf2_ros::TransformListener tf_;
+    //tf2_ros::TransformListener tf_listener_;
+    tf2_ros::Buffer tf_buffer_; // Use shared pointer for buffer
+    //tf2_ros::TransformListener tf_listener_; // Listener initialized using the buffer
 
     std::vector<Sdetection> detections;
     std::vector<Strack>     tracks;
@@ -128,7 +187,7 @@ class PeopleTrackingMhtAlgNode : public algorithm_base::IriBaseAlgorithm<PeopleT
     double first_time;
 
 
-   	bool tf_to_eigen_odom(const tf::Transform& tf_odom_pose_in, Eigen::Matrix4d& act_odom_matrix_tf, double dt); //for odometry 
+   	bool tf_to_eigen_odom(const tf2::Transform& tf_odom_pose_in, Eigen::Matrix4d& act_odom_matrix_tf, double dt); //for odometry 
     void ini_markers();
     void fillTracksMsg();
     void publishMarkers();
@@ -140,7 +199,8 @@ class PeopleTrackingMhtAlgNode : public algorithm_base::IriBaseAlgorithm<PeopleT
     void fill_my_covariance_marker_prediction( unsigned int i );
     void fill_my_marker_cluster( unsigned int i );
     void fill_my_marker_group( unsigned int i );
-    tf::TransformListener tf_listener_;
+    
+    
 
     bool id_markers, id_cluster_markers, cov_markers, vel_markers, covdet_markers, covpred_markers, clust_markers,group_markers, cov_markers_head, cov_markers_arm1,cov_markers_arm2,track_path;
     bool local_tracker;
@@ -150,6 +210,10 @@ class PeopleTrackingMhtAlgNode : public algorithm_base::IriBaseAlgorithm<PeopleT
 
 
   public:
+
+    //std::unique_ptr<tf2_ros::Buffer> tf_buffer_;
+    //std::shared_ptr<tf2_ros::TransformListener> tf_listener_{nullptr};
+
    /**
     * \brief Constructor
     * 
@@ -157,7 +221,7 @@ class PeopleTrackingMhtAlgNode : public algorithm_base::IriBaseAlgorithm<PeopleT
     * communications variables to enable message exchange.
     */
     PeopleTrackingMhtAlgNode(void);
-
+     static std::shared_ptr<PeopleTrackingMhtAlgNode> create();  // new ros2 
    /**
     * \brief Destructor
     * 
@@ -166,7 +230,6 @@ class PeopleTrackingMhtAlgNode : public algorithm_base::IriBaseAlgorithm<PeopleT
     */
     ~PeopleTrackingMhtAlgNode(void);
 
-  protected:
    /**
     * \brief main node thread
     *
@@ -180,6 +243,9 @@ class PeopleTrackingMhtAlgNode : public algorithm_base::IriBaseAlgorithm<PeopleT
     * request data to the corresponding server topics.
     */
     void mainNodeThread(void);
+     std::shared_ptr<PeopleTrackingMhtAlgorithm> alg_;  // new ros2 
+  protected:
+
 
    /**
     * \brief dynamic reconfigure server callback
@@ -193,7 +259,7 @@ class PeopleTrackingMhtAlgNode : public algorithm_base::IriBaseAlgorithm<PeopleT
     * \param level  integer referring the level in which the configuration
     *               has been changed.
     */
-    void node_config_update(Config &config, uint32_t level);
+    //void node_config_update(Config &config, uint32_t level);
 
    /**
     * \brief node add diagnostics

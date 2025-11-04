@@ -1,20 +1,28 @@
+/*
+ * people_tracking_mht_alg.cpp
+ *
+ *  Created aprox on: 07/07/2013 (aprox)
+ *      Author: Ely Repiso
+ */
 // Copyright (C) from 2013-until now Institut de Robotica i Informatica Industrial, CSIC-UPC.
 // Author Ely Repiso
 // All rights reserved.
 /*
-* people_tracking_mht_alg_node.cpp
 *
 *      Created on: 2013 by Ely Repiso and published first as her TFC on 13/12/2013. Last Modified by Ely Repiso on 2025 (migration to ros-Noetic and in the middle of ros2- humble migration) 
 *      Author: Ely Repiso (from 2013 and currently).
 *      Furthermore, this code is a modification and extension extracted from the theory of the open source papers of Donald Reid IEEE Transaction on Automatic Control 1979 and Kai Oliver Arras ICRA2008. We never had their code, therefore, we implemented this code from scratch, only taking inspiration from their articles.
+*     
 *      License (for other authors that will not be the original one): CC BY-NC-ND 4.0 
 *      (Attribution-NonCommercial-#NoDerivatives 4.0 International)
 *       https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en
+*
 *      This license does not allow other authors to modify or to take profit from these works. 
 *      Then, for #modifications or derivative works, please contact ely.repiso@upc.edu to try to agree on 
 *  collaborations (for #journals with other researchers, formal collaborations between UPC and companies, and so on).
 *
 * Please, to use it cite: Vaquero, Victor, et al. "Low cost, robust and real time system for detecting and tracking moving objects to automate cargo handling in port terminals." Robot 2015: Second Iberian Robotics Conference: Advances in Robotics, Volume 2. Cham: Springer International Publishing, 2015.
+*
 *  Redistribution and use in source and binary forms, without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -48,17 +56,26 @@
 
 #include "people_tracking_mht_alg.h"
 
-PeopleTrackingMhtAlgorithm::PeopleTrackingMhtAlgorithm(void)
+PeopleTrackingMhtAlgorithm::PeopleTrackingMhtAlgorithm(void) //:
+ // node_(rclcpp::Node::make_shared("people_tracking_mht_algorithm_node"))
 {
   myPeopleTrackingMht = new Cmht();
+ // node_ = rclcpp::Node::make_shared("people_tracking_mht_algorithm_node");
+  //tf_buffer_ = std::make_shared<tf2_ros::Buffer>(node_->get_clock()); // Initialize the tf2 buffer
+  //tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_, node_); // Initialize the listener with the buffer
 }
+
+/*PeopleTrackingMhtAlgorithm::PeopleTrackingMhtAlgorithm(void)
+{
+  myPeopleTrackingMht = new Cmht();
+}*/
 
 PeopleTrackingMhtAlgorithm::~PeopleTrackingMhtAlgorithm(void)
 {
   delete myPeopleTrackingMht;
 }
 
-void PeopleTrackingMhtAlgorithm::config_update(Config& new_cfg, uint32_t level)
+/*void PeopleTrackingMhtAlgorithm::config_update(Config& new_cfg, uint32_t level)
 {
   this->lock();
 
@@ -83,17 +100,37 @@ void PeopleTrackingMhtAlgorithm::config_update(Config& new_cfg, uint32_t level)
 
 	myPeopleTrackingMht->set_augment_covariance_track(new_cfg.augment_covariance_track);
   this->unlock();
-}
+}*/
 
 // PeopleTrackingMhtAlgorithm Public API
 
 bool PeopleTrackingMhtAlgorithm::iteration(const std::vector<Sdetection> &detections, std::vector<Strack> &tracks, std::vector<Strack> &predictions, std::vector<Exitcluster> &clusters, Codometry &odom, Cvelocity &velocity,std::vector<exitGroup> &groups, bool &local_tracker)
 {
 
+  // TODO: cambiar esto a dynamico en ros2 humble con lo del params.yaml con todo lo del dynamic reconfigure
+ /* myPeopleTrackingMht->set_threshold_distance(2.0);
+  myPeopleTrackingMht->set_threshold_confirmation_track(0.9);
+  myPeopleTrackingMht->set_threshold_no_deteccion(0.4);
+  myPeopleTrackingMht->set_laser_Pd(0.9);
+  myPeopleTrackingMht->set_laser_beta_ft(0.1);
+  myPeopleTrackingMht->set_laser_beta_nt(0.11);
+  myPeopleTrackingMht->set_laser_beta_no_detection(0.99);
+  myPeopleTrackingMht->set_laser_beta_track_no_confirmed(0.02);
+  myPeopleTrackingMht->set_increment_iteration_track_no_confirmed(0.01);
+  myPeopleTrackingMht->set_covariance_no_track(5.0);
+
+ myPeopleTrackingMht->set_generate_database_companion(false);
+ myPeopleTrackingMht->set_fuse_tibi_and_teo_tracks(false);
+ myPeopleTrackingMht->set_debug_fuse_tibi_and_teo_tracks(false);
+
+ myPeopleTrackingMht->set_mht_velocity_margin(1.0);
+
+ myPeopleTrackingMht->set_augment_covariance_track(0.15);
   //ROS_INFO(" inicio (iteration) TTTTTTTTTT myPeopleTrackingMht->mht_Cscene_se_in_tracks();");
-  //myPeopleTrackingMht->mht_Cscene_se_in_tracks();
+  //myPeopleTrackingMht->mht_Cscene_se_in_tracks();*/
 
 	// ROS_INFO("PeopleTrackingMhtAlgorithm::iteration");
+	myPeopleTrackingMht->set_augment_covariance_track(0.5);
 	// ROS_INFO("PeopleTrackingMhtAlgorithm::iteration %d", myDetections.size());
   std::vector<Sdetection> myDetections= detections;
   
@@ -102,7 +139,9 @@ bool PeopleTrackingMhtAlgorithm::iteration(const std::vector<Sdetection> &detect
     //myPeopleTrackingMht->mht_Cscene_se_in_tracks();
       
     if(local_tracker){  
-    	 ROS_INFO("PeopleTrackingMhtAlgorithm::ODOMETRIA");
+    	//ROS_INFO("PeopleTrackingMhtAlgorithm::ODOMETRIA");
+    	RCLCPP_ERROR(rclcpp::get_logger("NombrePersonalizado"), "PeopleTrackingMhtAlgorithm::ODOMETRIA");
+      //RCLCPP_ERROR(this->get_logger(), "PeopleTrackingMhtAlgorithm::ODOMETRIA");
     	Codometry myOdom=odom;
     	myPeopleTrackingMht->mht_odom_update(myOdom);
      

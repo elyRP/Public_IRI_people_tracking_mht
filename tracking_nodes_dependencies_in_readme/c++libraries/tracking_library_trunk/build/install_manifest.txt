@@ -1,0 +1,15 @@
+/usr/local/include/iri/people_tracking_mht/scene_elements/person_abstract.h
+/usr/local/include/iri/people_tracking_mht/scene_elements/person_bhmip.h
+/usr/local/include/iri/people_tracking_mht/scene_elements/robot.h
+/usr/local/lib/iri/people_tracking_mht/libpeople_tracking_mht.so
+/usr/local/include/iri/people_tracking_mht/track.h
+/usr/local/include/iri/people_tracking_mht/mht.h
+/usr/local/include/iri/people_tracking_mht/mhtStructs.h
+/usr/local/include/iri/people_tracking_mht/Clusters.h
+/usr/local/include/iri/people_tracking_mht/odometry.h
+/usr/local/include/iri/people_tracking_mht/total_velocity.h
+/usr/local/include/iri/people_tracking_mht/Groups.h
+/usr/local/include/iri/people_tracking_mht/prediction_bhmip.h
+/usr/local/include/iri/people_tracking_mht/scene_abstract.h
+/usr/local/include/iri/people_tracking_mht/iri_geometry.h
+/usr/share/cmake-3.22/Modules/Findpeople_tracking_mht.cmake

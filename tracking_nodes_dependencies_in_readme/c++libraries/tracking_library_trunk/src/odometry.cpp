@@ -1,5 +1,5 @@
 /*
- * Odometry.cpp
+ * odometry.cpp
  *
  *  Created on: 12/02/2015
  *      Author: Ely Repiso
@@ -9,17 +9,20 @@
 // All rights reserved.
 /*
 *
-*      Created on: 2013 by Ely Repiso and published first as her TFC on 13/12/2013. Last Modified by Ely Repiso on 2025 (migration to ros-Noetic and in the middle of ros2-humble migration) 
+*      Created on: 2013 by Ely Repiso and published first as her TFC on 13/12/2013. Last Modified by Ely Repiso on 2025 (migration to ros-Noetic and in the middle of ros2- humble migration) 
 *      Author: Ely Repiso (from 2013 and currently).
 *      Furthermore, this code is a modification and extension extracted from the theory of the open source papers of Donald Reid IEEE Transaction on Automatic Control 1979 and Kai Oliver Arras ICRA2008. We never had their code, therefore, we implemented this code from scratch, only taking inspiration from their articles.
+*     
 *      License (for other authors that will not be the original one): CC BY-NC-ND 4.0 
 *      (Attribution-NonCommercial-#NoDerivatives 4.0 International)
 *       https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en
+*
 *      This license does not allow other authors to modify or to take profit from these works. 
 *      Then, for #modifications or derivative works, please contact ely.repiso@upc.edu to try to agree on 
 *  collaborations (for #journals with other researchers, formal collaborations between UPC and companies, and so on).
 *
 * Please, to use it cite: Vaquero, Victor, et al. "Low cost, robust and real time system for detecting and tracking moving objects to automate cargo handling in port terminals." Robot 2015: Second Iberian Robotics Conference: Advances in Robotics, Volume 2. Cham: Springer International Publishing, 2015.
+*
 *  Redistribution and use in source and binary forms, without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -51,7 +54,7 @@
 ***********************************************************
 */
 
-//OJO!!! iba bien con cargo_ants == false!!! Tener en cuenta! que va bien con lo de tibi y dabo, por si con cargo_ants=true va mal, por si no este arreglado, que creo que si.
+//OJO!!! iba bien con cargo_ants == false!!! Tener en cuenta! que va bien con lo de tibi y dabo, por si con cargo_ants=true va mal, porque no esta corregido.
 #include "odometry.h"
 
 Codometry::Codometry():

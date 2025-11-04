@@ -1,7 +1,7 @@
 /*
  * scene_abstract.cpp
  *
- *  Created on: Jul 9, 2013. Last Modified by Ely Repiso on 2025 (migration to ros-Noetic and in the middle of ros2-humble migration).
+ *  Created on: Jul 31, 2013. Last Modified by Ely Repiso on 2025 (migration to ros-Noetic and in the middle of ros2-humble migration).
  *      Author: gferrer
  *      Author: Ely Repiso (Modifications for people tracking mht)
  *
@@ -41,7 +41,6 @@
  *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
- 
 #include "scene_abstract.h"
 #include <stdio.h>
 #include <iostream>

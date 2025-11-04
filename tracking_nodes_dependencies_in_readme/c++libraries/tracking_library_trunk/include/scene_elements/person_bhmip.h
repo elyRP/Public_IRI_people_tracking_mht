@@ -1,7 +1,7 @@
- /*
- * person_bhmip.h
+/*
+ * prediction_bhmip.h
  *
- *  Created on: Jul 9, 2013. Last Modified by Ely Repiso on 2025 (migration to ros-Noetic and in the middle of ros2-humble migration).
+ *  Created on: Jul 31, 2013. Last Modified by Ely Repiso on 2025 (migration to ros-Noetic and in the middle of ros2-humble migration).
  *      Author: gferrer
  *      Author: Ely Repiso (Modifications for people tracking mht)
  *

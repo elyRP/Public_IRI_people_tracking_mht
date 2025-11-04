@@ -12,6 +12,7 @@
 # *      This license does not allow other authors to modify or to take profit from these works. 
 # *      Then, for #modifications or derivative works, please contact ely.repiso@upc.edu to try to agree on 
 # *  collaborations (for #journals with other researchers, formal collaborations between UPC and companies, and so on).
+# *
 # * Please, to use it cite: Vaquero, Victor, et al. "Low cost, robust and real time system for detecting and tracking moving objects to automate cargo handling in port terminals." Robot 2015: Second Iberian Robotics Conference: Advances in Robotics, Volume 2. Cham: Springer International Publishing, 2015.
 # */
 #*  Redistribution and use in source and binary forms, without
@@ -43,26 +44,29 @@
 #*  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #*  POSSIBILITY OF SUCH DAMAGE.
 #***********************************************************
-frame_id:               "map"
-local_tracker:          False
-association_threshold:  2.0
+
+frame_id: "map"
+local_tracker: False
+association_threshold: 1.0
 confirmation_threshold: 0.9
-deletion_threshold:     0.4
-laser_probability:      0.9
-laser_false_alarm:      0.1
-laser_new_track:        0.11
-laser_no_detection:     0.99
-laser_no_confirmed:     0.02
+deletion_threshold: 0.4
+laser_probability: 0.9
+laser_false_alarm: 0.1
+laser_new_track: 0.11
+laser_no_detection: 0.99
+laser_no_confirmed: 0.02
 laser_no_confirmed_iteration: 0.01
-augment_covariance_track:     0.15
-id_markers:           True
-vel_markers:          True
-cov_markers:          True
-covdet_markers:       False
-covpred_markers:      False
-clust_markers:        False
-cov_markers_head:     False
-cov_markers_arm1:     False
-cov_markers_arm2:     False
-track_path_markers:   False 
-mht_velocity_margin:  0.5 
+augment_covariance_track: 0.5
+mht_velocity_margin: 1.0
+covariance_no_track: 5.0
+id_markers: True
+vel_markers: True
+cov_markers: True
+covdet_markers: False
+covpred_markers: False
+clust_markers: False
+cov_markers_head: False
+cov_markers_arm1: False
+cov_markers_arm2: False
+track_path_markers: False 
+mht_velocity_margin: 0.5 
