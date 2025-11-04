@@ -2,7 +2,7 @@
 // Author 
 // All rights reserved.
 /*
-* people_tracking_mht_alg.cpp
+* people_tracking_mht_alg.h
 *
 *      Created on: 2013 by Ely Repiso and published first as her TFC on 13/12/2013. Last Modified by Ely Repiso on 2025 (migration to ros-Noetic and in the middle of ros2- humble migration) 
 *      Author: Ely Repiso (from 2013 and currently).
