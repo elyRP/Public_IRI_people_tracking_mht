@@ -1,6 +1,9 @@
 ###  Public_IRI_people_tracking_mht
 It is a multi-hypothesis people tracker created at the IRI institution by Ely Repiso. It is published in her TFC, TFM, one conference article, and a journal article. Please, cite the journal article when you use it.
 
+Notice: UPC publishes undergraduate, master's theses and PhD dissertations in this way (under license: CC By-NC-ND 4.0), but if collaborations to create derivative works become overwhelming, or if we need to help you incorporate parts of these works into your own, or if there are too many agreements to include them with companies and I can't help everyone collaborating with them, I will speak with the legal department of UPC to see how we can release to 100% open source the code. But in between this is like open source + including suport for sure (not like normal open source that they do not suport you to combine the works). Then, this actual situation should beneficiate more to both parts you and me.
+
+
 ##  Tracker
 
 # Author recognition and citation:
